@@ -14,6 +14,13 @@ describe("Math", function () {
     }
 
     describe("ceilDiv",function(){
-        it("")
+        it("ceil div",async function(){
+            const { math } = await loadFixture(deployMath);
+
+            const a= 4;
+            const b = 3
+            const result = await math.ceilDiv(a,b);
+            console.log(result)
+        })
     })
 })
