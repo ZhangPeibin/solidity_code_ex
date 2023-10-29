@@ -76,6 +76,14 @@ contract SimplePaymentChannel {
         return ecrecover(message, v, r, s);
     }
 
+    function messageHash(
+        address _contractAddress,
+        uint256 amount
+    ) public pure returns (bytes32) {
+        bytes32 message = keccak256(abi.encodePacked(_contractAddress, amount));
+        return message;
+    }
+
     function ethSignedMessage(
         address _contractAddress,
         uint256 amount
