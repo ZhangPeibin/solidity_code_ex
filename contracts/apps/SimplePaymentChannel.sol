@@ -35,7 +35,11 @@ contract SimplePaymentChannel {
         if(!success){
             revert("cal fail");
         }
-        selfdestruct(sender);
+
+        (success,) = payable(sender).call{value: address(this).balance}("");
+        if (!success) {
+            revert("call{value} failed");
+        }
     }
     
     function extend(uint256 newExpiration) external{
@@ -47,7 +51,10 @@ contract SimplePaymentChannel {
 
     function claimTimeout() external{
         require(block.timestamp >= expiration);//如果过期了，那么就能销毁
-        selfdestruct(sender);
+        (bool success,) = payable(sender).call{value: address(this).balance}("");
+        if (!success) {
+            revert("call{value} failed");
+        }
     }
 
 
